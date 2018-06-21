@@ -225,7 +225,7 @@ class PlanStage(object):
         # packager.  For now we resort to a cast.
         filename = cast(str, resource.deployment_package.filename)
         concurrency_method_name = ''
-        concurrency_params = {'function_name': resource.resource_name}
+        concurrency_params = {'function_name': resource.function_name}
         if resource.reserved_concurrency is None:
             concurrency_method_name = 'delete_function_concurrency'
         else:

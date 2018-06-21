@@ -239,9 +239,10 @@ class TestPlanLambdaFunction(BasePlannerTests):
             output_var='reserved_concurrency_result',
         )]
 
-        assert len(plan) == len(expected)
-        for plan_i, expected_i in zip(plan, expected):
-            self.assert_apicall_equals(plan_i, expected_i)
+        # create_function
+        self.assert_apicall_equals(plan[0], expected[0])
+        # delete_function_concurrency
+        self.assert_apicall_equals(plan[2], expected[1])
 
         assert list(self.last_plan.messages.values()) == [
             'Creating lambda function: appname-dev-function_name\n',
@@ -281,9 +282,10 @@ class TestPlanLambdaFunction(BasePlannerTests):
             output_var='reserved_concurrency_result',
         )]
 
-        assert len(plan) == len(expected)
-        for plan_i, expected_i in zip(plan, expected):
-            self.assert_apicall_equals(plan_i, expected_i)
+        # update_function
+        self.assert_apicall_equals(plan[0], expected[0])
+        # delete_function_concurrency
+        self.assert_apicall_equals(plan[3], expected[1])
 
         assert list(self.last_plan.messages.values()) == [
             'Creating lambda function: appname-dev-function_name\n',
@@ -321,9 +323,10 @@ class TestPlanLambdaFunction(BasePlannerTests):
             output_var='reserved_concurrency_result',
         )]
 
-        assert len(plan) == len(expected)
-        for plan_i, expected_i in zip(plan, expected):
-            self.assert_apicall_equals(plan_i, expected_i)
+        # create_function
+        self.assert_apicall_equals(plan[0], expected[0])
+        # put_function_concurrency
+        self.assert_apicall_equals(plan[2], expected[1])
 
         assert list(self.last_plan.messages.values()) == [
             'Creating lambda function: appname-dev-function_name\n',

@@ -225,7 +225,9 @@ class PlanStage(object):
         # packager.  For now we resort to a cast.
         filename = cast(str, resource.deployment_package.filename)
         concurrency_method_name = ''
-        concurrency_params = {'function_name': resource.function_name}
+
+        concurrency_params = {}  # type: Dict[str, Any]
+        concurrency_params['function_name'] = resource.function_name
         if resource.reserved_concurrency is None:
             concurrency_method_name = 'delete_function_concurrency'
         else:
@@ -234,7 +236,7 @@ class PlanStage(object):
                 'reserved_concurrent_executions': resource.reserved_concurrency
             })
 
-        api_calls = None
+        api_calls = []  # type: List[_INSTRUCTION_MSG]
 
         if not self._remote_state.resource_exists(resource):
             params = {
@@ -251,7 +253,7 @@ class PlanStage(object):
                 'security_group_ids': resource.security_group_ids,
                 'subnet_ids': resource.subnet_ids,
             }
-            api_calls = [
+            api_calls.extend([
                 (models.APICall(
                     method_name='create_function',
                     params=params,
@@ -263,7 +265,7 @@ class PlanStage(object):
                     name='lambda_arn',
                     variable_name=varname,
                 )
-            ]
+            ])
         else:
             # TODO: Consider a smarter diff where we check if we even need
             # to do an update() API call.
@@ -280,7 +282,7 @@ class PlanStage(object):
                 'security_group_ids': resource.security_group_ids,
                 'subnet_ids': resource.subnet_ids,
             }
-            api_calls = [
+            api_calls.extend([
                 (models.APICall(
                     method_name='update_function',
                     params=params,
@@ -297,7 +299,7 @@ class PlanStage(object):
                     name='lambda_arn',
                     variable_name=varname,
                 )
-            ]
+            ])
 
         api_calls.append((models.APICall(
             method_name=concurrency_method_name,

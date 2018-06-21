@@ -299,12 +299,12 @@ class PlanStage(object):
                 )
             ]
 
-        api_calls.append(models.APICall(
+        api_calls.append((models.APICall(
             method_name=concurrency_method_name,
             params=concurrency_params,
             output_var='reserved_concurrency_result',
         ), "Updating lambda function concurrency limit: %s\n" %
-            resource.function_name)
+            resource.function_name))
 
         return api_calls
 

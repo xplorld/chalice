@@ -41,6 +41,7 @@ def create_function_resource(name, function_name=None,
         role=role,
         security_group_ids=[],
         subnet_ids=[],
+        reserved_concurrency=None,
     )
 
 

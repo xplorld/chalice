@@ -230,9 +230,9 @@ class PlanStage(object):
             concurrency_method_name = 'delete_function_concurrency'
         else:
             concurrency_method_name = 'put_function_concurrency'
-            concurrency_params = {
+            concurrency_params.update({
                 'reserved_concurrent_executions': resource.reserved_concurrency
-            }
+            })
 
         api_calls = None
 

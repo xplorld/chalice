@@ -288,7 +288,7 @@ class TestPlanLambdaFunction(BasePlannerTests):
         self.assert_apicall_equals(plan[3], expected[1])
 
         assert list(self.last_plan.messages.values()) == [
-            'Creating lambda function: appname-dev-function_name\n',
+            'Updating lambda function: appname-dev-function_name\n',
             'Updating lambda function concurrency limit:'
             ' appname-dev-function_name\n',
         ]
